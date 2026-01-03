@@ -210,19 +210,18 @@ stage = STAGES[st.session_state.stage_idx]
 st.markdown("**Model stage**")
 st.markdown(f"### {stage['ui']}")
 
-question = st.text_area("Question", height=150, value=st.session_state.question_value)
-st.session_state.question_value = question
-
-
-# Back button (always visible except Stage 1)
+# Small back link under the stage title (hidden on Stage 1)
 if st.session_state.stage_idx > 0:
-    if st.button("Back", use_container_width=True):
-        st.session_state.stage_idx = max(st.session_state.stage_idx - 1, 0)
+    if st.button("← Back", key="back_link"):
+        st.session_state.stage_idx -= 1
         st.session_state.last_answer = ""
         st.session_state.quiz_correct = False
         st.session_state.quiz_choice = None
         st.session_state.checked = False
         st.rerun()
+
+question = st.text_area("Question", height=150, value=st.session_state.question_value)
+st.session_state.question_value = question
 
 
 if st.button("Send", use_container_width=True):
